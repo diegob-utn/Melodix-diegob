@@ -2,30 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Melodix.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Melodix.Data;
 using Melodix.Modelos;
 
 namespace Melodix.MVC.Controllers
 {
-    public class UsuariosController : Controller
+    public class AlbumsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UsuariosController(ApplicationDbContext context)
+        public AlbumsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Usuarios
+        // GET: Albums
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuario.ToListAsync());
+            var applicationDbContext = _context.Albums.Include(a => a.Artista);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Usuarios/Details/5
+        // GET: Albums/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario
+            var album = await _context.Albums
+                .Include(a => a.Artista)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(album);
         }
 
-        // GET: Usuarios/Create
+        // GET: Albums/Create
         public IActionResult Create()
         {
+            ViewData["ArtistaId"] = new SelectList(_context.Artistas, "Id", "Nombre");
             return View();
         }
 
-        // POST: Usuarios/Create
+        // POST: Albums/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Email,Contraseña,Rol,Activo,CreadoEn,ActualizadoEn,Proveedor,Biografia,FotoPerfil,Ubicacion,FechaNacimiento,SpotifyId,SpotifyTokenAcceso,SpotifyTokenRefresco")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,FechaLanzamiento,UrlPortada,SpotifyAlbumId,ArtistaId")] Album album)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
+                _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            ViewData["ArtistaId"] = new SelectList(_context.Artistas, "Id", "Nombre", album.ArtistaId);
+            return View(album);
         }
 
-        // GET: Usuarios/Edit/5
+        // GET: Albums/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var album = await _context.Albums.FindAsync(id);
+            if (album == null)
             {
                 return NotFound();
             }
-            return View(usuario);
+            ViewData["ArtistaId"] = new SelectList(_context.Artistas, "Id", "Nombre", album.ArtistaId);
+            return View(album);
         }
 
-        // POST: Usuarios/Edit/5
+        // POST: Albums/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Email,Contraseña,Rol,Activo,CreadoEn,ActualizadoEn,Proveedor,Biografia,FotoPerfil,Ubicacion,FechaNacimiento,SpotifyId,SpotifyTokenAcceso,SpotifyTokenRefresco")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,FechaLanzamiento,UrlPortada,SpotifyAlbumId,ArtistaId")] Album album)
         {
-            if (id != usuario.Id)
+            if (id != album.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace Melodix.MVC.Controllers
             {
                 try
                 {
-                    _context.Update(usuario);
+                    _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.Id))
+                    if (!AlbumExists(album.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace Melodix.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuario);
+            ViewData["ArtistaId"] = new SelectList(_context.Artistas, "Id", "Nombre", album.ArtistaId);
+            return View(album);
         }
 
-        // GET: Usuarios/Delete/5
+        // GET: Albums/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +130,35 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario
+            var album = await _context.Albums
+                .Include(a => a.Artista)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuario == null)
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(album);
         }
 
-        // POST: Usuarios/Delete/5
+        // POST: Albums/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario != null)
+            var album = await _context.Albums.FindAsync(id);
+            if (album != null)
             {
-                _context.Usuario.Remove(usuario);
+                _context.Albums.Remove(album);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(int id)
+        private bool AlbumExists(int id)
         {
-            return _context.Usuario.Any(e => e.Id == id);
+            return _context.Albums.Any(e => e.Id == id);
         }
     }
 }
