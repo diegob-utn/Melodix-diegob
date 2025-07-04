@@ -22,7 +22,7 @@ namespace Melodix.MVC.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuarios.ToListAsync());
+            return View(await _context.Usuario.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -33,7 +33,7 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
+            var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (usuario == null)
             {
@@ -73,7 +73,7 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuario.FindAsync(id);
             if (usuario == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace Melodix.MVC.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
+            var usuario = await _context.Usuario
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (usuario == null)
             {
@@ -139,10 +139,10 @@ namespace Melodix.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuario.FindAsync(id);
             if (usuario != null)
             {
-                _context.Usuarios.Remove(usuario);
+                _context.Usuario.Remove(usuario);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace Melodix.MVC.Controllers
 
         private bool UsuarioExists(int id)
         {
-            return _context.Usuarios.Any(e => e.Id == id);
+            return _context.Usuario.Any(e => e.Id == id);
         }
     }
 }

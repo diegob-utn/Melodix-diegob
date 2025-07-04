@@ -9,7 +9,7 @@ namespace Melodix.Modelos
         public string? SpotifyAlbumId { get; set; }
         public int? ArtistaId { get; set; }
         public Artista? Artista { get; set; }
-        public List<Pista>? Pistas { get; set; }
-        public List<UsuarioLikeAlbum>? UsuarioLikeAlbums { get; set; }
+        public List<Pista> Pistas { get; set; } = new();
+        public List<UsuarioLikeAlbum> UsuarioLikeAlbums { get; set; } = new();
     }
 }

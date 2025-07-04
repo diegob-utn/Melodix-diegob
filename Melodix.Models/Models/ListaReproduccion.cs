@@ -13,8 +13,8 @@ namespace Melodix.Modelos
         public bool? Colaborativa { get; set; }
         public int? UsuarioId { get; set; }
         public Usuario? Usuario { get; set; }
-        public List<ListaPista>? ListaPistas { get; set; }
-        public List<UsuarioLikeLista>? UsuarioLikeListas { get; set; }
-        public List<UsuarioSigueLista>? UsuarioSigueListas { get; set; }
+        public List<ListaPista> ListaPistas { get; set; } = new();
+        public List<UsuarioLikeLista> UsuarioLikeListas { get; set; } = new();
+        public List<UsuarioSigueLista> UsuarioSigueListas { get; set; } = new();
     }
 }
