@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Melodix.Modelos;
 
-namespace Melodix.MVC.Data
+namespace Melodix.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
