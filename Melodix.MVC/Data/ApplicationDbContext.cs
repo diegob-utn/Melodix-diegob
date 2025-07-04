@@ -11,8 +11,26 @@ namespace Melodix.MVC.Data
         {
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
+
+
+
+        public DbSet<Usuario> Usuario { get; set; }
         public DbSet<UsuarioSigue> UsuarioSigue { get; set; }
+        public DbSet<ListaReproduccion> ListasReproduccion { get; set; }
+        public DbSet<UsuarioLikeLista> UsuarioLikeListas { get; set; }
+        public DbSet<UsuarioSigueLista> UsuarioSigueListas { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Pista> Pistas { get; set; }
+        public DbSet<Artista> Artistas { get; set; }
+        public DbSet<HistorialEscucha> HistorialEscuchas { get; set; }
+        public DbSet<HistorialLike> HistorialLikes { get; set; }
+        public DbSet<UsuarioLikeAlbum> UsuarioLikeAlbums { get; set; }
+        public DbSet<UsuarioLikePista> UsuarioLikePistas { get; set; }
+        public DbSet<UsuarioSigueArtista> UsuarioSigueArtistas { get; set; }
+        public DbSet<SuscripcionUsuario> SuscripcionUsuarios { get; set; }
+        public DbSet<Suscripcion> Suscripciones { get; set; }
+        public DbSet<PlanSuscripcion> PlanesSuscripcion { get; set; }
+        public DbSet<ListaPista> ListaPistas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

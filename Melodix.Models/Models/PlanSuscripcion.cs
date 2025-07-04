@@ -11,6 +11,6 @@ namespace Melodix.Modelos
         public bool RequiereVerificacionEstudiante { get; set; }
         public bool PermiteControlExplicito { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public List<Suscripcion>? Suscripciones { get; set; }
+        public List<Suscripcion> Suscripciones { get; set; } = new();
     }
 }

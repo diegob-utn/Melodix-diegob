@@ -18,17 +18,17 @@ namespace Melodix.Modelos
         public string? SpotifyId { get; set; }
         public string? SpotifyTokenAcceso { get; set; }
         public string? SpotifyTokenRefresco { get; set; }
-        public List<ListaReproduccion>? ListasReproduccion { get; set; } = new();
-        public List<HistorialEscucha>? HistorialEscuchas { get; set; } = new();
-        public List<UsuarioSigue>? Seguidos { get; set; } = new();
-        public List<UsuarioSigue>? Seguidores { get; set; } = new();
-        public List<UsuarioLikeAlbum>? UsuarioLikeAlbums { get; set; } = new();
-        public List<UsuarioLikeLista>? UsuarioLikeListas { get; set; } = new();
-        public List<UsuarioLikePista>? UsuarioLikePistas { get; set; } = new();
-        public List<UsuarioSigueArtista>? UsuarioSigueArtistas { get; set; } = new();
-        public List<UsuarioSigueLista>? UsuarioSigueListas { get; set; } = new();
-        public List<HistorialLike>? HistorialLikes { get; set; } = new();
-        public List<SuscripcionUsuario>? SuscripcionUsuarios { get; set; } = new();
-        public List<Suscripcion>? Suscripciones { get; set; } = new();  
+        public List<ListaReproduccion> ListasReproduccion { get; set; } = new();
+        public List<HistorialEscucha> HistorialEscuchas { get; set; } = new();
+        public List<UsuarioSigue> Seguidos { get; set; } = new();
+        public List<UsuarioSigue> Seguidores { get; set; } = new();
+        public List<UsuarioLikeAlbum> UsuarioLikeAlbums { get; set; } = new();
+        public List<UsuarioLikeLista> UsuarioLikeListas { get; set; } = new();
+        public List<UsuarioLikePista> UsuarioLikePistas { get; set; } = new();
+        public List<UsuarioSigueArtista> UsuarioSigueArtistas { get; set; } = new();
+        public List<UsuarioSigueLista> UsuarioSigueListas { get; set; } = new();
+        public List<HistorialLike> HistorialLikes { get; set; } = new();
+        public List<SuscripcionUsuario> SuscripcionUsuarios { get; set; } = new();
+        public List<Suscripcion> Suscripciones { get; set; } = new();
     }
 }

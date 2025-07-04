@@ -11,6 +11,6 @@ namespace Melodix.Modelos
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
         public EstadoSuscripcion Estado { get; set; }
-        public List<SuscripcionUsuario>? SuscripcionUsuarios { get; set; }
+        public List<SuscripcionUsuario> SuscripcionUsuarios { get; set; } = new();
     }
 }

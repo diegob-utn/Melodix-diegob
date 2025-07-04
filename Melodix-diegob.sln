@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodix.MVC", "Melodix.MVC\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodix.Models", "Melodix.Models\Melodix.Models.csproj", "{D4CFC5D1-1BD4-4B06-8A73-5B8C47E3B0C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodix.API", "Melodix.API\Melodix.API.csproj", "{3570529B-B20E-4B1E-965E-33AC8AD468A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4CFC5D1-1BD4-4B06-8A73-5B8C47E3B0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4CFC5D1-1BD4-4B06-8A73-5B8C47E3B0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4CFC5D1-1BD4-4B06-8A73-5B8C47E3B0C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3570529B-B20E-4B1E-965E-33AC8AD468A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3570529B-B20E-4B1E-965E-33AC8AD468A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3570529B-B20E-4B1E-965E-33AC8AD468A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3570529B-B20E-4B1E-965E-33AC8AD468A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
