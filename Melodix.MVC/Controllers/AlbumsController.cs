@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Melodix.Data;
-using Melodix.Modelos;
+using Melodix.Models;
 
 namespace Melodix.MVC.Controllers
 {

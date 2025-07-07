@@ -1,11 +1,19 @@
-namespace Melodix.Modelos
+using Melodix.Models.Models;
+
+namespace Melodix.Models
 {
+    // Muchos a muchos: Suscripcion <-> Usuario
     public class SuscripcionUsuario
     {
+        // Necesarios
         public int Id { get; set; }
-        public int? SuscripcionId { get; set; }
-        public Suscripcion? Suscripcion { get; set; }
-        public int? UsuarioId { get; set; }
-        public Usuario? Usuario { get; set; }
+
+        // FKs
+        public int SuscripcionId { get; set; }
+        public string UsuarioId { get; set; }
+
+        // Navegadores
+        public Suscripcion Suscripcion { get; set; }
+        public ApplicationUser Usuario { get; set; }
     }
 }
