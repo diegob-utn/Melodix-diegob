@@ -1,0 +1,11 @@
+﻿@model Melodix.MVC.Areas.Admin.ViewModels.EditUserRolesViewModel
+@{
+    ViewData["Title"] = "Roles actualizados";
+}
+<div class="container">
+    <div class="alert alert-success mt-4">
+        <h4 class="alert-heading">¡Roles actualizados!</h4>
+        <p>Los roles del usuario <strong>@Model.Email</strong> se han actualizado correctamente.</p>
+        <a href="@Url.Action("Index", "UserRoles")" class="btn btn-spotify mt-2">Volver a la lista</a>
+    </div>
+</div>

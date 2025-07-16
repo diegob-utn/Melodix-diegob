@@ -1,11 +1,12 @@
 ﻿using Melodix.Models;
 using Melodix.Models.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+        
 namespace Melodix.Data
 {
-    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext:IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -149,6 +150,46 @@ namespace Melodix.Data
                 .WithMany(u => u.SolicitudesRevisadas)
                 .HasForeignKey(s => s.AdminRevisorId)
                 .IsRequired(false);
+
+        }
+
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.Entity is ApplicationUser &&
+                            (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            foreach(var entry in entries)
+            {
+                var now = DateTime.UtcNow;
+                if(entry.State == EntityState.Added)
+                {
+                    ((ApplicationUser)entry.Entity).CreadoEn = now;
+                }
+                ((ApplicationUser)entry.Entity).ActualizadoEn = now;
+            }
+
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.Entity is ApplicationUser &&
+                            (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            foreach(var entry in entries)
+            {
+                var now = DateTime.UtcNow;
+                if(entry.State == EntityState.Added)
+                {
+                    ((ApplicationUser)entry.Entity).CreadoEn = now;
+                }
+                ((ApplicationUser)entry.Entity).ActualizadoEn = now;
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

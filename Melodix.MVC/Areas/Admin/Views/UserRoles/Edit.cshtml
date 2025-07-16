@@ -1,0 +1,23 @@
+﻿@model Melodix.MVC.Areas.Admin.Controllers.EditUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Editar roles de usuario";
+}
+
+<h2>Editar roles de @Model.Email</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div>
+        <label>Roles disponibles:</label>
+        @foreach(var role in Model.Roles)
+        {
+            <div>
+                <input type="checkbox" name="SelectedRoles" value="@role" @(Model.SelectedRoles.Contains(role) ? "checked" : "") />
+                <label>@role</label>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

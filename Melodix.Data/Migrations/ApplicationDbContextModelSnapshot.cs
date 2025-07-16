@@ -17,7 +17,7 @@ namespace Melodix.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.16")
+                .HasAnnotation("ProductVersion", "8.0.17")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -221,17 +221,17 @@ namespace Melodix.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Activo")
+                    b.Property<bool?>("Activo")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("ActualizadoEn")
+                    b.Property<DateTime?>("ActualizadoEn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreadoEn")
+                    b.Property<DateTime?>("CreadoEn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
@@ -246,6 +246,10 @@ namespace Melodix.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Nick")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -264,7 +268,7 @@ namespace Melodix.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Rol")
+                    b.Property<int?>("Rol")
                         .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
@@ -748,28 +752,21 @@ namespace Melodix.Data.Migrations
 
             modelBuilder.Entity("Melodix.Models.UsuarioSigue", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                    b.Property<string>("SeguidorId")
+                        .HasColumnType("text");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("SeguidoId")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreadoEn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SeguidoId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("SeguidorId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
+                    b.HasKey("SeguidorId", "SeguidoId");
 
                     b.HasIndex("SeguidoId");
-
-                    b.HasIndex("SeguidorId");
 
                     b.ToTable("UsuariosSigue");
                 });

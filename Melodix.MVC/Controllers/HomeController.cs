@@ -17,6 +17,10 @@ namespace Melodix.MVC.Controllers
         {
             return View();
         }
+        public IActionResult HomeMelodix()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
@@ -28,5 +32,6 @@ namespace Melodix.MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

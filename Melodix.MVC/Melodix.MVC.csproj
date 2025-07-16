@@ -35,4 +35,14 @@
     <ProjectReference Include="..\Melodix.Models\Melodix.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Services\SpotifyApis\" />
+    <Folder Include="Services\Patterns\Repository\" />
+    <Folder Include="Services\Patterns\Observer\" />
+    <Folder Include="Services\Patterns\Singleton\" />
+    <Folder Include="Services\Patterns\Strategy\" />
+  </ItemGroup>
+
 </Project>

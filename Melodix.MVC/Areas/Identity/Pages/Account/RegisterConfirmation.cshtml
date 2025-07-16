@@ -1,4 +1,4 @@
-﻿@page
+﻿@* @page
 @model RegisterConfirmationModel
 @{
     ViewData["Title"] = "Register confirmation";
@@ -19,5 +19,29 @@
         Please check your email to confirm your account.
 </p>
     }
+} *@
+
+
+
+
+@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmación de registro";
 }
 
+<h1>@ViewData["Title"]</h1>
+@if(Model.DisplayConfirmAccountLink)
+{
+    <p>
+        Se ha enviado un correo de confirmación a <strong>@Model.Email</strong>.
+        Por favor, revisa tu bandeja de entrada y/o spam y haz clic en el enlace para activar tu cuenta.
+    </p>
+}
+else
+{
+    <p>
+        Se ha enviado un correo de confirmación a <strong>@Model.Email</strong>.
+        Por favor, revisa tu bandeja de entrada y sigue las instrucciones para activar tu cuenta.
+    </p>
+}

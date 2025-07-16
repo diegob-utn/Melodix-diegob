@@ -1,0 +1,268 @@
+﻿@page
+@{
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Melodix - Spotify Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: #121212;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .sidebar {
+            background: #181818;
+            min-height: 100vh;
+            width: 260px;
+        }
+        .sidebar .nav-link, .sidebar .btn {
+            color: #b3b3b3;
+        }
+        .sidebar .nav-link.active, .sidebar .btn.active {
+            color: #fff;
+            background: #282828;
+        }
+        .main-content {
+            background: #181818;
+            min-height: 100vh;
+        }
+        .card-album, .card-radio {
+            background: #242424;
+            border: none;
+        }
+        .player-bar {
+            background: #181818;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .search-bar {
+            background: #242424;
+            border: none;
+            color: #fff;
+        }
+        .search-bar::placeholder {
+            color: #b3b3b3;
+        }
+        .rounded-img {
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .scrollable {
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar d-flex flex-column p-3">
+            <div class="mb-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" width="40" alt="Logo" />
+            </div>
+            <h6 class="text-white mb-3">Tu biblioteca</h6>
+            <div class="d-flex mb-3">
+                <button class="btn btn-dark btn-sm me-2 active">Playlists</button>
+                <button class="btn btn-dark btn-sm">Álbumes</button>
+                <button class="btn btn-success btn-sm ms-auto">+ Crear</button>
+            </div>
+            <input class="form-control search-bar mb-3" type="text" placeholder="Buscar" />
+            <div class="scrollable flex-grow-1">
+                <div class="mb-2">
+                    <span class="badge bg-purple me-2">💜</span>
+                    <span class="text-white">Tus me gusta</span>
+                    <div class="small text-secondary">Playlist · 6 canciones</div>
+                </div>
+                <div class="mb-2">
+                    <span class="text-white">Si Un Día Estás Sola</span>
+                    <div class="small text-secondary">Sencillo · Big One</div>
+                </div>
+                <div class="mb-2">
+                    <span class="text-white">Podés pedirme perdón</span>
+                    <div class="small text-secondary">Sencillo · Enanero</div>
+                </div>
+                <div class="mb-2">
+                    <span class="text-white">Mi playlist n.º 1</span>
+                    <div class="small text-secondary">Playlist · Noe Benavides</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 p-4">
+            <!-- Top Bar -->
+            <div class="d-flex align-items-center mb-4">
+                <button class="btn btn-dark rounded-circle me-3"><i class="bi bi-house-door"></i></button>
+                <input class="form-control search-bar flex-grow-1 me-3" type="text" placeholder="¿Qué quieres reproducir?" />
+                <button class="btn btn-outline-light me-2">Explorar Premium</button>
+                <button class="btn btn-dark me-2">Instalar aplicación</button>
+                <span class="me-2"><i class="bi bi-bell"></i></span>
+                <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                <span class="bg-secondary rounded-circle d-inline-block" style="width:32px; height:32px; text-align:center; line-height:32px;">N</span>
+            </div>
+
+            <!-- Filtros -->
+            <div class="mb-4">
+                <button class="btn btn-light btn-sm me-2">Todo</button>
+                <button class="btn btn-dark btn-sm me-2">Música</button>
+                <button class="btn btn-dark btn-sm">Podcasts</button>
+            </div>
+
+            <!-- Álbumes y sencillos populares -->
+            <h4 class="fw-bold mb-3">Álbumes y sencillos populares</h4>
+            <div class="row row-cols-1 row-cols-md-5 g-3 mb-4">
+                <div class="col">
+                    <div class="card card-album">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273b8e2e2e2e2e2e2e2e2e2e2e2" class="card-img-top rounded-img" height="140" />
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-white small">Fórmula, Vol. 2 (Deluxe Edition)</div>
+                            <div class="text-secondary small">Romeo Santos</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-album">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273e2e2e2e2e2e2e2e2e2e2e2e2" class="card-img-top rounded-img" height="140" />
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-white small">VITAMINA</div>
+                            <div class="text-secondary small">Jombriel, DFZM, Jotta</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-album">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273c8e2e2e2e2e2e2e2e2e2e2e2" class="card-img-top rounded-img" height="140" />
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-white small">Un Verano Sin Ti</div>
+                            <div class="text-secondary small">Bad Bunny</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-album">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273d8e2e2e2e2e2e2e2e2e2e2e2" class="card-img-top rounded-img" height="140" />
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-white small">Homerun</div>
+                            <div class="text-secondary small">Paulo Londra</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-album">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273e8e2e2e2e2e2e2e2e2e2e2e2" class="card-img-top rounded-img" height="140" />
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-white small">MAÑANA SERÁ BONITO</div>
+                            <div class="text-secondary small">KAROL G</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estaciones populares -->
+            <h4 class="fw-bold mb-3">Estaciones populares</h4>
+            <div class="row row-cols-1 row-cols-md-5 g-3 mb-4">
+                <div class="col">
+                    <div class="card card-radio" style="background:#f7a8b8;">
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-dark">Maná</div>
+                            <div class="text-dark small">Con Bacilos, Sin Bandera, Chayanne y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-radio" style="background:#f7b8e8;">
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-dark">Morat</div>
+                            <div class="text-dark small">Con Beret, Camilo, Ela Taubert y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-radio" style="background:#b8e8f7;">
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-dark">Aventura</div>
+                            <div class="text-dark small">Con Monchy & Alexandra, Don Omar...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-radio" style="background:#b8f7c8;">
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-dark">Jombriel</div>
+                            <div class="text-dark small">Con Blessd, Bad Bunny, Beéle y más</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-radio" style="background:#c8f7b8;">
+                        <div class="card-body p-2">
+                            <div class="fw-bold text-dark">Don Omar</div>
+                            <div class="text-dark small">Con Tego Calderón, Angel Y Khriz...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar (Radio y artista) -->
+        <div class="sidebar d-flex flex-column p-3" style="width:340px; background:#181818;">
+            <div class="mb-3">
+                <img src="https://i.scdn.co/image/ab67616d0000b273e2e2e2e2e2e2e2e2e2e2e2e2" class="img-fluid rounded mb-2" />
+                <div class="fw-bold text-white">Radio de Don Omar</div>
+                <div class="text-secondary small">Salió El Sol<br />Don Omar</div>
+            </div>
+            <div>
+                <img src="https://i.scdn.co/image/ab67616d0000b273f8e2e2e2e2e2e2e2e2e2e2e2" class="img-fluid rounded mb-2" />
+                <div class="fw-bold text-white">Acerca del artista</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Bar -->
+    <div class="player-bar">
+        <div class="d-flex align-items-center" style="width:260px;">
+            <img src="https://i.scdn.co/image/ab67616d0000b273e2e2e2e2e2e2e2e2e2e2e2e2" width="48" class="rounded me-2" />
+            <div>
+                <div class="fw-bold small">Salió El Sol</div>
+                <div class="text-secondary small">Don Omar</div>
+            </div>
+        </div>
+        <div class="flex-grow-1 d-flex flex-column align-items-center">
+            <div>
+                <button class="btn btn-link text-white"><i class="bi bi-shuffle"></i></button>
+                <button class="btn btn-link text-white"><i class="bi bi-skip-start-fill"></i></button>
+                <button class="btn btn-link text-white"><i class="bi bi-play-circle-fill fs-3"></i></button>
+                <button class="btn btn-link text-white"><i class="bi bi-skip-end-fill"></i></button>
+                <button class="btn btn-link text-white"><i class="bi bi-repeat"></i></button>
+            </div>
+            <div class="d-flex align-items-center" style="width:300px;">
+                <span class="small">0:01</span>
+                <div class="progress flex-grow-1 mx-2" style="height:4px; background:#404040;">
+                    <div class="progress-bar bg-success" style="width: 5%;"></div>
+                </div>
+                <span class="small">5:15</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center" style="width:260px; justify-content: flex-end;">
+            <button class="btn btn-link text-white"><i class="bi bi-volume-up"></i></button>
+            <div class="progress mx-2" style="width:80px; height:4px; background:#404040;">
+                <div class="progress-bar bg-success" style="width: 60%;"></div>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

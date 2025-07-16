@@ -1,0 +1,28 @@
+﻿@model List<(Melodix.Models.Models.ApplicationUser user, IList<string> roles)>
+
+@{
+    ViewData["Title"] = "Usuarios y Roles";
+}
+
+<h2>Usuarios y Roles</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.user.Email</td>
+            <td>@string.Join(", ", item.roles)</td>
+            <td>
+                <a href="@Url.Action("Edit", "UserRoles", new { area = "Admin", id = item.user.Id })">Editar Rol</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,6 +1,10 @@
 using Melodix.Data;
+using Melodix.Models.Models;
+using Melodix.MVC.Services.Patterns.Adapter.SendGrid;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Melodix.MVC
 {
@@ -16,9 +20,27 @@ namespace Melodix.MVC
                 options.UseNpgsql(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            builder.Services.AddRazorPages();
+            //builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
+            builder.Services.AddSingleton<IMailProvider, SendGridAdapter>();
+            builder.Services.AddSingleton<IEmailSender, SendGridAdapter>();
+
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 15;
+                options.Password.RequiredUniqueChars = 1;
+            });
 
             var app = builder.Build();
 
@@ -42,8 +64,13 @@ namespace Melodix.MVC
             app.UseAuthorization();
 
             app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
             app.MapRazorPages();
 
             app.Run();

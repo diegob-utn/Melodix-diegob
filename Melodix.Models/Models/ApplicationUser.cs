@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Microsoft.Build.Framework;
+using System.ComponentModel.DataAnnotations;
 
 namespace Melodix.Models.Models
 {
@@ -12,10 +14,13 @@ namespace Melodix.Models.Models
     public class ApplicationUser:IdentityUser
     {
         // Necesarios
-        public RolUsuario Rol { get; set; }
-        public bool Activo { get; set; }
-        public DateTime CreadoEn { get; set; }
-        public DateTime ActualizadoEn { get; set; }
+
+        [Required(ErrorMessage = "El campo Nick es obligatorio.")]
+        public string Nick { get; set; }
+        public RolUsuario? Rol { get; set; }
+        public bool? Activo { get; set; }
+        public DateTime? CreadoEn { get; set; }
+        public DateTime? ActualizadoEn { get; set; }
 
         // Navegadores
         public PerfilUsuario? Perfil { get; set; }
