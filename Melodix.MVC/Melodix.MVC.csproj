@@ -39,11 +39,14 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Services\SpotifyApis\" />
     <Folder Include="Services\Patterns\Repository\" />
     <Folder Include="Services\Patterns\Observer\" />
     <Folder Include="Services\Patterns\Singleton\" />
     <Folder Include="Services\Patterns\Strategy\" />
+    <Folder Include="Services\SpotifyApis\Adapters\" />
+    <Folder Include="Services\SpotifyApis\Facade\" />
+    <Folder Include="Services\SpotifyApis\Models\" />
+    <Folder Include="Services\SpotifyApis\Utils\" />
   </ItemGroup>
 
 </Project>
