@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using Melodix.Keys; // Importa el proyecto de las keys
 
 public class SendGridAdapter:IMailProvider, IEmailSender
 {
@@ -13,26 +14,39 @@ public class SendGridAdapter:IMailProvider, IEmailSender
 
     public SendGridAdapter(IConfiguration configuration)
     {
-        _apiKey = configuration["SendGrid:ApiKey"] ?? Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+        _apiKey = Keys.SendGridApiKey; // Usa la key del proyecto Melodix.Keys
+
+        if(string.IsNullOrWhiteSpace(_apiKey))
+            throw new Exception("No se encontró la clave SendGrid.");
+
         _fromEmail = configuration["SendGrid:FromEmail"] ?? "no-reply@tudominio.com";
         _fromName = configuration["SendGrid:FromName"] ?? "Melodix";
     }
 
-    // Para tu lógica interna
     public async Task SendEmailAsync(string to, string subject, string htmlMessage)
     {
         var client = new SendGridClient(_apiKey);
         var from = new EmailAddress(_fromEmail, _fromName);
         var toEmail = new EmailAddress(to);
-        var msg = MailHelper.CreateSingleEmail(from, toEmail, subject, plainTextContent: null, htmlContent: htmlMessage);
+        var msg = MailHelper.CreateSingleEmail(
+            from,
+            toEmail,
+            subject,
+            plainTextContent: "Este correo requiere un cliente compatible con HTML.",
+            htmlContent: htmlMessage
+        );
 
-        await client.SendEmailAsync(msg);
+        var response = await client.SendEmailAsync(msg);
+
+        if(!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Body.ReadAsStringAsync();
+            throw new Exception($"Error enviando correo: {response.StatusCode} - {errorBody}");
+        }
     }
 
-    // Para Identity
     async Task IEmailSender.SendEmailAsync(string email, string subject, string htmlMessage)
     {
-
         await SendEmailAsync(email, subject, htmlMessage);
     }
 }

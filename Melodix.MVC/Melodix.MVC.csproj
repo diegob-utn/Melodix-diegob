@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Melodix.Data\Melodix.Data.csproj" />
+    <ProjectReference Include="..\Melodix.Keys\Melodix.Keys.csproj" />
     <ProjectReference Include="..\Melodix.Models\Melodix.Models.csproj" />
   </ItemGroup>
 
