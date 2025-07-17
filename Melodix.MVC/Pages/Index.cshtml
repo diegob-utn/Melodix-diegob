@@ -1,0 +1,191 @@
+﻿@page
+@model Melodix.MVC.Pages.Index
+
+@{
+    var albums = Model.PopularAlbums ?? new List<Melodix.MVC.Services.SpotifyApis.Models.SpotifyAlbumDto>();
+    var playlists = Model.FeaturedPlaylists ?? new List<Melodix.MVC.Services.SpotifyApis.Models.SpotifyPlaylistDto>();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Melodix - Spotify Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/spotify-clone.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+</head>
+<body class="bg-black">
+    <div class="container-fluid d-flex p-0 main-spotify">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-dark text-white py-3 px-3 d-flex flex-column">
+            <div class="d-flex align-items-center mb-4 gap-2">
+                <img src="/images/spotify-logo.svg" alt="Logo" class="spotify-logo" height="32" />
+                <span class="fw-bold fs-4">Tu biblioteca</span>
+                <button class="btn btn-dark btn-sm ms-auto rounded-circle"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <div class="d-flex gap-2 mb-3">
+                <button class="btn btn-light btn-sidebar active">Playlists</button>
+                <button class="btn btn-dark btn-sidebar">Álbumes</button>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control bg-secondary text-light border-0" placeholder="Buscar" />
+            </div>
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center text-muted small">
+                    <span>Recientes</span>
+                    <i class="bi bi-list-ul"></i>
+                </div>
+            </div>
+            <ul class="list-unstyled sidebar-list flex-grow-1">
+                <li class="mb-2">
+                    <div class="d-flex align-items-center">
+                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
+                        <div>
+                            <span class="fw-semibold text-white">Tus me gusta</span><br />
+                            <span class="text-muted small">Playlist · 6 canciones</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="d-flex align-items-center">
+                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
+                        <div>
+                            <span class="fw-semibold text-success">Podés pedirme perdón</span><br />
+                            <span class="text-muted small">Sencillo · Emanero</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="d-flex align-items-center">
+                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
+                        <div>
+                            <span class="fw-semibold text-white">Si Un Día Estás Sola | CRO...</span><br />
+                            <span class="text-muted small">Sencillo · Big One</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="d-flex align-items-center">
+                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
+                        <div>
+                            <span class="fw-semibold text-white">Mi playlist n.º 1</span><br />
+                            <span class="text-muted small">Playlist · Noe Benavides</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-grow-1 px-4 pt-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex gap-2">
+                    <button class="btn filter-btn active">Todo</button>
+                    <button class="btn filter-btn">Música</button>
+                    <button class="btn filter-btn">Podcasts</button>
+                </div>
+                <button class="btn btn-link text-light show-all-btn">Mostrar todo</button>
+            </div>
+            <h2 class="text-white fs-3 mb-3 fw-bold">Éxitos de cumbia</h2>
+            <div class="row g-3 tiles-grid mb-4">
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/cumbia-sonidera.jpg" class="card-img-top tile-img" alt="Cumbia Sonidera">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Cumbia Sonidera</h5>
+                            <p class="card-text tile-subtitle text-muted">¡Un sa-sa-saludo a todos los amantes de la cu-cumbia!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/100cumbia.jpg" class="card-img-top tile-img" alt="100% Cumbia">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">100% Cumbia</h5>
+                            <p class="card-text tile-subtitle text-muted">¡Baila esta cumbia! Los éxitos de Latinoamérica.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/supercumbias.jpg" class="card-img-top tile-img" alt="Super Cumbias">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Super Cumbias</h5>
+                            <p class="card-text tile-subtitle text-muted">¡Muévete al ritmo de las Cumbias!</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Replicar más tiles según tus datos -->
+            </div>
+            <h4 class="text-white mt-5 mb-3 fw-semibold">Basado en lo último que escuchaste</h4>
+            <div class="row g-3">
+                <div class="col-12 col-lg-6 col-xl-4">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/vivo-cumbia.jpg" class="card-img-top tile-img" alt="Vivo de Cumbia">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Vivo de Cumbia</h5>
+                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-4">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/emanero-mix.jpg" class="card-img-top tile-img" alt="Emanero Mix">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Emanero Mix</h5>
+                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="text-white mt-5 mb-3 fw-semibold">Creado para ti</h4>
+            <div class="row g-3">
+                <div class="col-12 col-lg-6 col-xl-4">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/radio-borracho.jpg" class="card-img-top tile-img" alt="Radio de BORRACHO Y LOCO">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Radio de BORRACHO Y LOCO</h5>
+                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-4">
+                    <div class="card bg-dark tile-card border-0 h-100">
+                        <img src="/images/radio-podes.jpg" class="card-img-top tile-img" alt="Radio de Podés pedirme perdón">
+                        <div class="card-body p-2">
+                            <h5 class="card-title tile-title text-white">Radio de Podés pedirme perdón</h5>
+                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Player bar -->
+    <footer class="spotify-player bg-dark text-light d-flex align-items-center justify-content-between px-3 py-2">
+        <div class="d-flex align-items-center gap-2">
+            <img src="/images/borracho-y-loco.jpg" alt="BORRACHO Y LOCO" class="player-thumb" />
+            <div>
+                <span class="fw-semibold">BORRACHO Y LOCO</span>
+                <br />
+                <span class="small text-muted">Emanero, Abel Pintos, La Planta</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-link text-light"><i class="bi bi-skip-start-fill"></i></button>
+            <button class="btn btn-link text-light"><i class="bi bi-play-fill"></i></button>
+            <button class="btn btn-link text-light"><i class="bi bi-skip-end-fill"></i></button>
+        </div>
+        <div>
+            <span class="small text-muted">1:22</span>
+            <input type="range" class="form-range player-progress" min="0" max="100" value="33" />
+            <span class="small text-muted">3:52</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-link text-light"><i class="bi bi-volume-up-fill"></i></button>
+            <button class="btn btn-link text-light"><i class="bi bi-music-note-list"></i></button>
+        </div>
+    </footer>
+</body>
+</html>

@@ -107,4 +107,114 @@ public class SpotifyWebApiAdapter:ISpotifyWebApiAdapter
         var response = await _httpClient.GetAsync(url);
         return await response.Content.ReadAsStringAsync();
     }
+
+    public Task<string> CreatePlaylistAsync(string userId, string accessToken, string name, string description, bool isPublic)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> AddTracksToPlaylistAsync(string playlistId, string[] trackUris, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> RemoveTracksFromPlaylistAsync(string playlistId, string[] trackUris, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetSeveralTracksAsync(string[] trackIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> SaveTracksAsync(string[] trackIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> RemoveSavedTracksAsync(string[] trackIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetSeveralAlbumsAsync(string[] albumIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> SaveAlbumsAsync(string[] albumIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> RemoveSavedAlbumsAsync(string[] albumIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetSeveralArtistsAsync(string[] artistIds, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetArtistAlbumsAsync(string artistId, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> FollowArtistAsync(string artistId, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> UnfollowArtistAsync(string artistId, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetAvailableGenreSeedsAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetCurrentUserProfileAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetAvailableDevicesAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetCurrentPlaybackAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetRecentlyPlayedAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetSavedTracksAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetSavedAlbumsAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> FollowPlaylistAsync(string playlistId, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> UnfollowPlaylistAsync(string playlistId, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 }

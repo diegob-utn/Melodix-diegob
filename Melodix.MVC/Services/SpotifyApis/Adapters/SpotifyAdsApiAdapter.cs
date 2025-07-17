@@ -24,5 +24,25 @@ public class SpotifyAdsApiAdapter:ISpotifyAdsApiAdapter
         return await response.Content.ReadAsStringAsync();
     }
 
+    public Task<string> CreateAdAsync(string accessToken, string adContent)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetAdStatsAsync(string accessToken, string adId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> UpdateAdAsync(string accessToken, string adId, string adContent)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> DeleteAdAsync(string accessToken, string adId)
+    {
+        throw new NotImplementedException();
+    }
+
     // Agrega más métodos aquí según lo que permita la Ads API
 }

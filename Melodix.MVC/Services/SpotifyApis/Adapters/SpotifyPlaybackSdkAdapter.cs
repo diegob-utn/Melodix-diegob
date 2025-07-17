@@ -76,4 +76,34 @@ public class SpotifyPlaybackSdkAdapter:ISpotifyPlaybackSdkAdapter
         var response = await _httpClient.PutAsync("https://api.spotify.com/v1/me/player", content);
         return await response.Content.ReadAsStringAsync();
     }
+
+    public Task<string> PlayContextAsync(string contextUri, string accessToken, string deviceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> SeekAsync(int positionMs, string accessToken, string deviceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> ShuffleAsync(bool state, string accessToken, string deviceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> RepeatAsync(string state, string accessToken, string deviceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetRecentlyPlayedAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> GetAvailableDevicesAsync(string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 }

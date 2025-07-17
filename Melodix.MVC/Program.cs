@@ -29,6 +29,10 @@ namespace Melodix.MVC
             //builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
             builder.Services.AddSingleton<IMailProvider, SendGridAdapter>();
             builder.Services.AddSingleton<IEmailSender, SendGridAdapter>();
+            builder.Services.AddHttpClient<ISpotifyWebApiAdapter, SpotifyWebApiAdapter>();
+            builder.Services.AddHttpClient<ISpotifyPlaybackSdkAdapter, SpotifyPlaybackSdkAdapter>();
+            builder.Services.AddHttpClient<ISpotifyAdsApiAdapter, SpotifyAdsApiAdapter>();
+            builder.Services.AddScoped<ISpotifyService, SpotifyService>();
 
 
             builder.Services.Configure<IdentityOptions>(options =>
