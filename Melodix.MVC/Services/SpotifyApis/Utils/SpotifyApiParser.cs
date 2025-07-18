@@ -41,30 +41,58 @@ namespace Melodix.MVC.Services.SpotifyApis.Utils
         public static List<SpotifyPlaylistDto> ParsePlaylists(string json)
         {
             var playlists = new List<SpotifyPlaylistDto>();
+            if(string.IsNullOrWhiteSpace(json))
+                return playlists;
+
             using var doc = JsonDocument.Parse(json);
 
-            if(!doc.RootElement.TryGetProperty("playlists", out var playlistsRoot))
-                return playlists;
-            if(!playlistsRoot.TryGetProperty("items", out var items))
-                return playlists;
-
-            foreach(var item in items.EnumerateArray())
+            // Spotify Featured Playlists endpoint returns { "playlists": { "items": [...] } }
+            JsonElement items;
+            if(doc.RootElement.TryGetProperty("playlists", out var playlistsRoot) &&
+                playlistsRoot.TryGetProperty("items", out items))
             {
-                var imageUrl = "";
-                if(item.TryGetProperty("images", out var images) && images.GetArrayLength() > 0)
-                    imageUrl = images[0].GetProperty("url").GetString();
-
-                playlists.Add(new SpotifyPlaylistDto
+                foreach(var item in items.EnumerateArray())
                 {
-                    Id = item.TryGetProperty("id", out var id) ? id.GetString() : "",
-                    Name = item.TryGetProperty("name", out var name) ? name.GetString() : "",
-                    Owner = item.TryGetProperty("owner", out var ownerObj) && ownerObj.TryGetProperty("display_name", out var owner) ? owner.GetString() : "",
-                    ImageUrl = imageUrl,
-                    Description = item.TryGetProperty("description", out var description) ? description.GetString() : "",
-                    TotalTracks = item.TryGetProperty("tracks", out var tracksObj) && tracksObj.TryGetProperty("total", out var totalTracks) ? totalTracks.GetInt32() : 0,
-                    TrackIds = null // Puedes agregar lógica para extraer tracks si lo necesitas
-                });
+                    var imageUrl = "";
+                    if(item.TryGetProperty("images", out var images) && images.GetArrayLength() > 0)
+                        imageUrl = images[0].GetProperty("url").GetString();
+
+                    playlists.Add(new SpotifyPlaylistDto
+                    {
+                        Id = item.TryGetProperty("id", out var id) ? id.GetString() : "",
+                        Name = item.TryGetProperty("name", out var name) ? name.GetString() : "",
+                        Owner = item.TryGetProperty("owner", out var ownerObj) && ownerObj.TryGetProperty("display_name", out var owner) ? owner.GetString() : "",
+                        Description = item.TryGetProperty("description", out var description) ? description.GetString() : "",
+                        ImageUrl = imageUrl,
+                        TotalTracks = item.TryGetProperty("tracks", out var tracksObj) && tracksObj.TryGetProperty("total", out var totalTracks) ? totalTracks.GetInt32() : 0,
+                        TrackIds = null // Puedes agregar lógica para extraer tracks si lo necesitas
+                    });
+                }
+                return playlists;
             }
+
+            // Si no existe la propiedad "playlists", intenta buscar "items" en la raíz (para compatibilidad)
+            if(doc.RootElement.TryGetProperty("items", out items))
+            {
+                foreach(var item in items.EnumerateArray())
+                {
+                    var imageUrl = "";
+                    if(item.TryGetProperty("images", out var images) && images.GetArrayLength() > 0)
+                        imageUrl = images[0].GetProperty("url").GetString();
+
+                    playlists.Add(new SpotifyPlaylistDto
+                    {
+                        Id = item.TryGetProperty("id", out var id) ? id.GetString() : "",
+                        Name = item.TryGetProperty("name", out var name) ? name.GetString() : "",
+                        Owner = item.TryGetProperty("owner", out var ownerObj) && ownerObj.TryGetProperty("display_name", out var owner) ? owner.GetString() : "",
+                        Description = item.TryGetProperty("description", out var description) ? description.GetString() : "",
+                        ImageUrl = imageUrl,
+                        TotalTracks = item.TryGetProperty("tracks", out var tracksObj) && tracksObj.TryGetProperty("total", out var totalTracks) ? totalTracks.GetInt32() : 0,
+                        TrackIds = null
+                    });
+                }
+            }
+
             return playlists;
         }
     }

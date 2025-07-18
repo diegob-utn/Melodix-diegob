@@ -9,5 +9,6 @@ namespace Melodix.MVC.Services.SpotifyApis.Models
         public string ImageUrl { get; set; }
         public int TotalTracks { get; set; }
         public string[] TrackIds { get; set; }
+        public string Uri => $"spotify:playlist:{Id}";
     }
 }

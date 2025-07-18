@@ -15,7 +15,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/spotify-clone.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
 </head>
+@section Scripts {
+    <script>
+        window.spotifyAccessToken = '@Model.SpotifyToken';
+    </script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="~/js/spotify-player.js"></script>
+}
 <body class="bg-black">
     <div class="container-fluid d-flex p-0 main-spotify">
         <!-- Sidebar -->
@@ -39,42 +47,18 @@
                 </div>
             </div>
             <ul class="list-unstyled sidebar-list flex-grow-1">
-                <li class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
-                        <div>
-                            <span class="fw-semibold text-white">Tus me gusta</span><br />
-                            <span class="text-muted small">Playlist · 6 canciones</span>
+                @foreach(var playlist in playlists.Take(4))
+                {
+                    <li class="mb-2">
+                        <div class="d-flex align-items-center">
+                            <img src="@(playlist.ImageUrl ?? "/images/playlist.png")" alt="Playlist" class="sidebar-thumb me-2" />
+                            <div>
+                                <span class="fw-semibold text-white">@playlist.Name</span><br />
+                                <span class="text-muted small">Playlist · @playlist.Owner</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
-                        <div>
-                            <span class="fw-semibold text-success">Podés pedirme perdón</span><br />
-                            <span class="text-muted small">Sencillo · Emanero</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
-                        <div>
-                            <span class="fw-semibold text-white">Si Un Día Estás Sola | CRO...</span><br />
-                            <span class="text-muted small">Sencillo · Big One</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <img src="/images/playlist.png" alt="Playlist" class="sidebar-thumb me-2" />
-                        <div>
-                            <span class="fw-semibold text-white">Mi playlist n.º 1</span><br />
-                            <span class="text-muted small">Playlist · Noe Benavides</span>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                }
             </ul>
         </aside>
         <!-- Main Content -->
@@ -87,79 +71,84 @@
                 </div>
                 <button class="btn btn-link text-light show-all-btn">Mostrar todo</button>
             </div>
-            <h2 class="text-white fs-3 mb-3 fw-bold">Éxitos de cumbia</h2>
+            <h2 class="text-white fs-3 mb-3 fw-bold">Nuevos lanzamientos</h2>
             <div class="row g-3 tiles-grid mb-4">
-                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/cumbia-sonidera.jpg" class="card-img-top tile-img" alt="Cumbia Sonidera">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Cumbia Sonidera</h5>
-                            <p class="card-text tile-subtitle text-muted">¡Un sa-sa-saludo a todos los amantes de la cu-cumbia!</p>
+                @foreach(var album in albums)
+                {
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card bg-dark tile-card border-0 h-100">
+                            <img src="@(album.ImageUrl ?? "/images/playlist.png")" class="card-img-top tile-img" alt="@album.Name">
+                            <div class="card-body p-2">
+                                <h5 class="card-title tile-title text-white">@album.Name</h5>
+                                <p class="card-text tile-subtitle text-muted">@album.ReleaseDate</p>
+                                <!-- Botón Play con integración SDK -->
+                                <button class="btn btn-success btn-play" data-uri="@album.Uri">
+                                    <i class="bi bi-play-fill"></i> Reproducir
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/100cumbia.jpg" class="card-img-top tile-img" alt="100% Cumbia">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">100% Cumbia</h5>
-                            <p class="card-text tile-subtitle text-muted">¡Baila esta cumbia! Los éxitos de Latinoamérica.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/supercumbias.jpg" class="card-img-top tile-img" alt="Super Cumbias">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Super Cumbias</h5>
-                            <p class="card-text tile-subtitle text-muted">¡Muévete al ritmo de las Cumbias!</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Replicar más tiles según tus datos -->
+                }
             </div>
-            <h4 class="text-white mt-5 mb-3 fw-semibold">Basado en lo último que escuchaste</h4>
-            <div class="row g-3">
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/vivo-cumbia.jpg" class="card-img-top tile-img" alt="Vivo de Cumbia">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Vivo de Cumbia</h5>
-                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+
+            <h4 class="text-white mt-5 mb-3 fw-semibold">Playlists destacadas</h4>
+            @if(!playlists.Any())
+            {
+                <div class="alert alert-warning text-center">No hay playlists para mostrar.</div>
+            }
+            else
+            {
+                <div class="row g-3">
+                    @foreach(var playlist in playlists)
+                    {
+                        <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="card bg-dark tile-card border-0 h-100">
+                                <img src="@(playlist.ImageUrl ?? "/images/playlist.png")" class="card-img-top tile-img" alt="@playlist.Name">
+                                <div class="card-body p-2">
+                                    <h5 class="card-title tile-title text-white">@playlist.Name</h5>
+                                    <p class="card-text tile-subtitle text-muted">Playlist · @playlist.Owner</p>
+                                    <!-- Botón Play para playlist (opcional, si tienes URI) -->
+                                    @if(!string.IsNullOrEmpty(playlist.Uri))
+                                    {
+                                        <button class="btn btn-success btn-play" data-uri="@playlist.Uri">
+                                            <i class="bi bi-play-fill"></i> Reproducir
+                                        </button>
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/emanero-mix.jpg" class="card-img-top tile-img" alt="Emanero Mix">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Emanero Mix</h5>
-                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
+            }
+
+            <h4 class="text-white mt-5 mb-3 fw-semibold">Todas las playlists</h4>
+            @if(!playlists.Any())
+            {
+                <div class="alert alert-warning text-center">No hay playlists para mostrar.</div>
+            }
+            else
+            {
+                <div class="row g-3">
+                    @foreach(var playlist in playlists)
+                    {
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="card bg-secondary tile-card border-0 h-100">
+                                <img src="@(playlist.ImageUrl ?? "/images/playlist.png")" class="card-img-top tile-img" alt="@playlist.Name">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title tile-title text-white">@playlist.Name</h6>
+                                    <p class="card-text tile-subtitle text-light small">Playlist · @playlist.Owner</p>
+                                    @if(!string.IsNullOrEmpty(playlist.Uri))
+                                    {
+                                        <button class="btn btn-success btn-play" data-uri="@playlist.Uri">
+                                            <i class="bi bi-play-fill"></i> Reproducir
+                                        </button>
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-            </div>
-            <h4 class="text-white mt-5 mb-3 fw-semibold">Creado para ti</h4>
-            <div class="row g-3">
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/radio-borracho.jpg" class="card-img-top tile-img" alt="Radio de BORRACHO Y LOCO">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Radio de BORRACHO Y LOCO</h5>
-                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-xl-4">
-                    <div class="card bg-dark tile-card border-0 h-100">
-                        <img src="/images/radio-podes.jpg" class="card-img-top tile-img" alt="Radio de Podés pedirme perdón">
-                        <div class="card-body p-2">
-                            <h5 class="card-title tile-title text-white">Radio de Podés pedirme perdón</h5>
-                            <p class="card-text tile-subtitle text-muted">Playlist · Spotify</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </main>
     </div>
     <!-- Player bar -->

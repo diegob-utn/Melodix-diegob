@@ -8,5 +8,6 @@ namespace Melodix.MVC.Services.SpotifyApis.Models
         public string ReleaseDate { get; set; }
         public string ImageUrl { get; set; }
         public string[] TrackIds { get; set; }
+        public string Uri => $"spotify:album:{Id}";
     }
 }
