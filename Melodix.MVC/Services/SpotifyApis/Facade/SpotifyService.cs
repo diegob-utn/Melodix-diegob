@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Melodix.MVC.Services.SpotifyApis.Adapters;
 
 public class SpotifyService : ISpotifyService
 {
@@ -18,7 +19,7 @@ public class SpotifyService : ISpotifyService
 
     public async Task<string> GetHomeDataAsync(string accessToken)
     {
-        // Ejemplo: Combina playlists, álbumes y recomendaciones
+        // Ejemplo: Combina playlists, ï¿½lbumes y recomendaciones
         var playlists = await _webApiAdapter.GetFeaturedPlaylistsAsync(accessToken);
         var albums = await _webApiAdapter.GetNewReleasesAsync(accessToken);
         var recommendations = await _webApiAdapter.GetRecommendationsAsync(accessToken, "", "", "");
@@ -43,5 +44,5 @@ public class SpotifyService : ISpotifyService
         return await _webApiAdapter.GetCurrentUserProfileAsync(accessToken);
     }
 
-    // Puedes agregar más métodos que combinen/adapten los adapters según la lógica de tu app
+    // Puedes agregar mï¿½s mï¿½todos que combinen/adapten los adapters segï¿½n la lï¿½gica de tu app
 }

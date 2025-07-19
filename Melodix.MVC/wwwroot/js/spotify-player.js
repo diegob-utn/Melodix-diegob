@@ -37,13 +37,21 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Player no inicializado o falta token.');
         return;
       }
-      fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
-        method: 'PUT',
-        body: JSON.stringify({ uris: [uri] }),
+      fetch('/spotify/play', {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userAccessToken}`
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          trackUri: uri,
+          accessToken: userAccessToken,
+          deviceId: deviceId
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        // feedback al usuario
+        console.log('Respuesta backend:', data);
       });
     });
   });

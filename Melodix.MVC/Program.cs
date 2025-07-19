@@ -1,10 +1,12 @@
 using Melodix.Data;
 using Melodix.Models.Models;
 using Melodix.MVC.Services.Patterns.Adapter.SendGrid;
+using Melodix.MVC.Services.SpotifyApis.Adapters;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using AspNet.Security.OAuth.Spotify;
 
 namespace Melodix.MVC
 {
@@ -46,10 +48,27 @@ namespace Melodix.MVC
                 options.Password.RequiredUniqueChars = 1;
             });
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = "Spotify";
+            })
+            .AddCookie()
+            .AddSpotify("Spotify", options =>
+            {
+                options.ClientId = "TU_CLIENT_ID";
+                options.ClientSecret = "TU_CLIENT_SECRET";
+                options.CallbackPath = "/callback"; // Debe coincidir con tu Redirect URI
+                options.Scope.Add("user-read-playback-state");
+                options.Scope.Add("user-modify-playback-state");
+                options.Scope.Add("user-read-currently-playing");
+                // Agrega más scopes si los necesitas
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if(app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
             }
@@ -65,6 +84,10 @@ namespace Melodix.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
