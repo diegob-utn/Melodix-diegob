@@ -1,18 +1,17 @@
-﻿let spotifyPlayer;
+﻿
+let spotifyPlayer;
 let deviceId = null;
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-  // Obtén el token desde window global
   const userAccessToken = window.spotifyAccessToken;
-
   spotifyPlayer = new Spotify.Player({
     name: 'Melodix Player',
-    getOAuthToken: cb => { cb(userAccessToken); }
+    getOAuthToken: cb => { cb(userAccessToken); },
+    volume: 0.5
   });
 
   spotifyPlayer.addListener('ready', ({ device_id }) => {
     deviceId = device_id;
-    // Habilita los botones play
     document.querySelectorAll('.btn-play').forEach(btn => btn.disabled = false);
     console.log('Ready with Device ID', device_id);
   });
@@ -23,10 +22,27 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     console.log('Device ID has gone offline', device_id);
   });
 
+  spotifyPlayer.addListener('initialization_error', ({ message }) => {
+    console.error('Initialization error:', message);
+  });
+  spotifyPlayer.addListener('authentication_error', ({ message }) => {
+    console.error('Authentication error:', message);
+  });
+  spotifyPlayer.addListener('account_error', ({ message }) => {
+    console.error('Account error:', message);
+  });
+
+  // Botón de prueba para togglePlay (opcional)
+  const toggleBtn = document.getElementById('togglePlay');
+  if (toggleBtn) {
+    toggleBtn.onclick = function() {
+      spotifyPlayer.togglePlay();
+    };
+  }
+
   spotifyPlayer.connect();
 };
 
-// Deshabilita los botones hasta que el reproductor esté listo
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.btn-play').forEach(btn => btn.disabled = true);
   document.querySelectorAll('.btn-play').forEach(function (btn) {
@@ -50,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .then(res => res.json())
       .then(data => {
-        // feedback al usuario
         console.log('Respuesta backend:', data);
       });
     });

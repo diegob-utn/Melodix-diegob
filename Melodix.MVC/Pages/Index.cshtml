@@ -6,6 +6,17 @@
     var playlists = Model.FeaturedPlaylists ?? new List<Melodix.MVC.Services.SpotifyApis.Models.SpotifyPlaylistDto>();
 }
 
+
+<!-- Botón de login de la app o de Spotify según autenticación -->
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-outline-success mb-3" href="/Spotify/Login">Iniciar sesión con Spotify</a>
+}
+else
+{
+    <a class="btn btn-primary mb-3" href="/Identity/Account/Login">Iniciar sesión en la app</a>
+}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

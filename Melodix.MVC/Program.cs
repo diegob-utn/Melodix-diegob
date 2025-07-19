@@ -14,7 +14,19 @@ namespace Melodix.MVC
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configura Kestrel para usar el certificado generado por mkcert
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenLocalhost(5001, listenOptions =>
+                {
+                    listenOptions.UseHttps(
+                        Path.Combine(AppContext.BaseDirectory, "localhost.pfx")
+                    );
+                });
+            });
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -37,6 +49,11 @@ namespace Melodix.MVC
             builder.Services.AddScoped<ISpotifyService, SpotifyService>();
 
 
+            builder.Services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 5001;
+            });
+
             builder.Services.Configure<IdentityOptions>(options =>
             {
 
@@ -56,9 +73,9 @@ namespace Melodix.MVC
             .AddCookie()
             .AddSpotify("Spotify", options =>
             {
-                options.ClientId = "TU_CLIENT_ID";
-                options.ClientSecret = "TU_CLIENT_SECRET";
-                options.CallbackPath = "/callback"; // Debe coincidir con tu Redirect URI
+                options.ClientId = Melodix.Keys.SpotifyKeys.ClientId;
+                options.ClientSecret = Melodix.Keys.SpotifyKeys.ClientSecret;
+                options.CallbackPath = "/callback";
                 options.Scope.Add("user-read-playback-state");
                 options.Scope.Add("user-modify-playback-state");
                 options.Scope.Add("user-read-currently-playing");
@@ -83,9 +100,6 @@ namespace Melodix.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseAuthentication();
             app.UseAuthorization();

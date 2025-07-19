@@ -48,6 +48,15 @@
     <Folder Include="Services\SpotifyApis\Facade\" />
     <Folder Include="Services\SpotifyApis\Models\" />
     <Folder Include="Services\SpotifyApis\Utils\" />
+    <Content Include="localhost.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="localhost-key.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="localhost.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
